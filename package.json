@@ -1,0 +1,35 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "RS School Node.js crud-api task",
+  "homepage": "https://github.com/Altmerian/nodejs-crud-api#readme",
+  "license": "MIT",
+  "author": "Altmerian",
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "scripts": {
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "test": "jest --silent",
+    "test:verbose": "jest --verbose",
+    "build": "tsc",
+    "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node dist/index.js",
+    "start:prod": "npm run build && npm start"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.15.17",
+    "@typescript-eslint/eslint-plugin": "^8.32.0",
+    "@typescript-eslint/parser": "^8.32.0",
+    "eslint": "^9.26.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.3",
+    "ts-jest": "^29.3.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
