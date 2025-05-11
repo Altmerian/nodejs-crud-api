@@ -25,6 +25,9 @@ const routes: Routes = {
   DELETE: {},
 };
 
+export const USER_PATH = "/api/users";
+export const USER_ID = ":id";
+
 /**
  * Register a route handler for a specific HTTP method and path
  * @param method The HTTP method (GET, POST, PUT, DELETE)
@@ -96,9 +99,9 @@ const getPathPattern = (path: string): string => {
     segments[1] === "users"
   ) {
     if (segments.length === 2) {
-      return "/api/users";
+      return USER_PATH;
     } else {
-      return "/api/users/:id";
+      return `${USER_PATH}/${USER_ID}`;
     }
   }
 

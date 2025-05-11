@@ -1,7 +1,14 @@
 import { config } from "dotenv";
 import { startServer } from "./server";
-import { registerRoute } from "./router";
-import { healthCheck } from "./controllers";
+import { registerRoute, USER_PATH, USER_ID } from "./router";
+import { 
+  healthCheck, 
+  getAllUsers, 
+  getUserById, 
+  createUser, 
+  updateUser, 
+  deleteUser 
+} from "./controllers";
 
 const DEFAULT_PORT = 4000;
 
@@ -10,6 +17,11 @@ config();
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : DEFAULT_PORT;
 
 registerRoute("GET", "/", healthCheck);
+registerRoute("GET", USER_PATH, getAllUsers);
+registerRoute("GET", `${USER_PATH}/${USER_ID}`, getUserById);
+registerRoute("POST", USER_PATH, createUser);
+registerRoute("PUT", `${USER_PATH}/${USER_ID}`, updateUser);
+registerRoute("DELETE", `${USER_PATH}/${USER_ID}`, deleteUser);
 
 let server: any = null;
 

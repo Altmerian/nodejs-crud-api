@@ -52,6 +52,23 @@ class UserRepository {
   }
 
   /**
+   * Gets a user by username (case-insensitive)
+   * @param username Username to search for
+   * @returns The user if found, null otherwise
+   */
+  async getByUsername(username: string): Promise<User | null> {
+    const lowercaseUsername = username.toLowerCase();
+    
+    for (const user of this.users.values()) {
+      if (user.username.toLowerCase() === lowercaseUsername) {
+        return user;
+      }
+    }
+    
+    return null;
+  }
+
+  /**
    * Creates a new user
    * @param userData Data for new user
    * @returns The created user
