@@ -1,4 +1,3 @@
-// In a test file
 import { DEFAULT_ERROR_MESSAGE, ServerError } from "errors/server.error";
 import { CustomError } from "errors/custom-error";
 
@@ -24,7 +23,7 @@ describe("ServerError", () => {
     const err = new ServerError();
     expect(err.message).toBe(DEFAULT_ERROR_MESSAGE);
   });
-  
+
   it("should have the correct serializeError method", () => {
     const err = new ServerError("Test");
     expect(err.serializeError()).toEqual({ message: "Test" });
