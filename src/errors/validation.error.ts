@@ -7,7 +7,10 @@ export class ValidationError extends CustomError {
   statusCode = 400;
   name = "ValidationError";
 
-  constructor(message: string, private field?: string) {
+  constructor(
+    message: string,
+    private field?: string,
+  ) {
     super(message);
     Object.setPrototypeOf(this, ValidationError.prototype);
   }

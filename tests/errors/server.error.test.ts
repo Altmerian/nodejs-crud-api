@@ -1,5 +1,5 @@
-import { DEFAULT_ERROR_MESSAGE, ServerError } from "errors/server.error";
-import { CustomError } from "errors/custom-error";
+import { DEFAULT_ERROR_MESSAGE, ServerError } from "../../src/errors/server.error";
+import { CustomError } from "../../src/errors/custom-error";
 
 describe("ServerError", () => {
   it("should be an instance of ServerError, CustomError, and Error", () => {

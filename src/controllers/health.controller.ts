@@ -8,7 +8,7 @@ import { sendJsonResponse } from "../utils";
 export const healthCheck = async (
   _req: IncomingMessage,
   res: ServerResponse,
-  _url: URL
+  _url: URL,
 ): Promise<void> => {
   sendJsonResponse(res, 200, {
     status: "OK",

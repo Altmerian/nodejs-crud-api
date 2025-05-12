@@ -80,6 +80,26 @@ describe("User Factory", () => {
       expect(() => validateUserData(invalidData as any, true)).toThrow("Age must be a number");
     });
 
+    it("should throw error for age less than or equal to 0", () => {
+      const zeroAgeData = {
+        username: "John",
+        age: 0,
+        hobbies: ["reading"],
+      };
+
+      expect(() => validateUserData(zeroAgeData, true)).toThrow(ValidationError);
+      expect(() => validateUserData(zeroAgeData, true)).toThrow("Age must be greater than 0");
+
+      const negativeAgeData = {
+        username: "John",
+        age: -5,
+        hobbies: ["reading"],
+      };
+
+      expect(() => validateUserData(negativeAgeData, true)).toThrow(ValidationError);
+      expect(() => validateUserData(negativeAgeData, true)).toThrow("Age must be greater than 0");
+    });
+
     it("should throw error for invalid hobbies type", () => {
       const invalidData = {
         username: "John",

@@ -50,12 +50,15 @@ export class UserService {
    */
   async createUser(userData: UserDto): Promise<User> {
     validateUserData(userData, true);
-    
+
     const existingUser = await userRepository.getByUsername(userData.username!);
     if (existingUser) {
-      throw new ValidationError(`User with username '${userData.username}' already exists`, 'username');
+      throw new ValidationError(
+        `User with username '${userData.username}' already exists`,
+        "username",
+      );
     }
-    
+
     return userRepository.create(userData);
   }
 

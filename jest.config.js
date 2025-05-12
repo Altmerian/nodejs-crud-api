@@ -9,4 +9,7 @@ module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  // Run tests in sequence to avoid port conflicts
+  maxWorkers: 1
 };

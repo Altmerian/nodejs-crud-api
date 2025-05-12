@@ -12,7 +12,7 @@ function createServer(port: number): Server {
   const server = http.createServer(
     async (req: IncomingMessage, res: ServerResponse) => {
       try {
-        console.log(`${req.method} ${req.url}`);
+        console.log(`${req.method} ${req.url} (worker port ${port})`);
         await router(req, res);
       } catch (error) {
         const serverError =
@@ -30,9 +30,16 @@ function createServer(port: number): Server {
 
     if (error.message.includes("EADDRINUSE")) {
       console.error(`Port ${port} is already in use`);
+      // Don't exit if we're running tests
+      if (process.env.NODE_ENV !== "test") {
+        process.exit(1);
+      }
+    } else {
+      // Don't exit if we're running tests
+      if (process.env.NODE_ENV !== "test") {
+        process.exit(1);
+      }
     }
-
-    process.exit(1);
   });
 
   return server;

@@ -34,12 +34,12 @@ class UserRepository {
    */
   async getById(id: string): Promise<User> {
     validateUuid(id);
-    
+
     const user = this.users.get(id);
     if (!user) {
       throw new NotFoundError(`User with id ${id} not found`);
     }
-    
+
     return user;
   }
 
@@ -58,13 +58,13 @@ class UserRepository {
    */
   async getByUsername(username: string): Promise<User | null> {
     const lowercaseUsername = username.toLowerCase();
-    
+
     for (const user of this.users.values()) {
       if (user.username.toLowerCase() === lowercaseUsername) {
         return user;
       }
     }
-    
+
     return null;
   }
 
@@ -90,7 +90,7 @@ class UserRepository {
   async update(id: string, userData: UserDto): Promise<User> {
     const existingUser = await this.getById(id);
     const updatedUser = updateUser(existingUser, userData);
-    
+
     this.users.set(id, updatedUser);
     return updatedUser;
   }
@@ -111,6 +111,36 @@ class UserRepository {
    */
   async clear(): Promise<void> {
     this.users.clear();
+  }
+
+  /**
+   * Sets a user directly in the repository - used for syncing between processes
+   * @param user The user object to set
+   */
+  syncUser(user: User): void {
+    validateUuid(user.id);
+    this.users.set(user.id, user);
+  }
+
+  /**
+   * Replaces the entire users collection - for complete synchronization
+   * @param users Array of users to set
+   */
+  syncAllUsers(users: User[]): void {
+    this.users.clear();
+    
+    for (const user of users) {
+      validateUuid(user.id);
+      this.users.set(user.id, user);
+    }
+  }
+  
+  /**
+   * Gets a snapshot of all users for synchronization
+   * @returns The entire users collection as an array
+   */
+  getAllUsersSnapshot(): User[] {
+    return Array.from(this.users.values());
   }
 }
 

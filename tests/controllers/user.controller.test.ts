@@ -1,7 +1,7 @@
 import http from 'node:http';
 
 const HOST = 'localhost';
-const PORT = 4000;
+const PORT = 5000;
 const BASE_PATH = '/api/users';
 
 const testUser = {

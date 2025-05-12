@@ -21,40 +21,48 @@ export const validateUuid = (id: string): void => {
  */
 export const validateUserData = (
   userData: UserDto,
-  isCreateOperation: boolean = false
+  isCreateOperation: boolean = false,
 ): void => {
   // For creation, all fields are required
   if (isCreateOperation) {
     if (!userData.username) {
       throw new ValidationError("Username is required", "username");
     }
-    
+
     if (userData.age === undefined) {
       throw new ValidationError("Age is required", "age");
     }
-    
+
     if (!userData.hobbies) {
       throw new ValidationError("Hobbies array is required", "hobbies");
     }
   }
-  
+
   // Type validation (applied for both create and update)
-  if (userData.username !== undefined && typeof userData.username !== "string") {
+  if (
+    userData.username !== undefined &&
+    typeof userData.username !== "string"
+  ) {
     throw new ValidationError("Username must be a string", "username");
   }
-  
-  if (userData.age !== undefined && 
-    (typeof userData.age !== "number" || isNaN(userData.age))) {
+
+  if (
+    userData.age !== undefined &&
+    (typeof userData.age !== "number" || isNaN(userData.age))
+  ) {
     throw new ValidationError("Age must be a number", "age");
   }
-  
+
+  if (userData.age !== undefined && userData.age <= 0) {
+    throw new ValidationError("Age must be greater than 0", "age");
+  }
+
   if (userData.hobbies !== undefined) {
     if (!Array.isArray(userData.hobbies)) {
       throw new ValidationError("Hobbies must be an array", "hobbies");
     }
-    
-    // Check if all elements in hobbies are strings
-    if (userData.hobbies.some(hobby => typeof hobby !== "string")) {
+
+    if (userData.hobbies.some((hobby) => typeof hobby !== "string")) {
       throw new ValidationError("All hobbies must be strings", "hobbies");
     }
   }
@@ -67,10 +75,8 @@ export const validateUserData = (
  * @throws ValidationError if userData is invalid
  */
 export const createUser = (userData: UserDto): User => {
-  // Validate required fields and types
   validateUserData(userData, true);
-  
-  // Create a new user with a generated UUID
+
   return {
     id: uuidv4(),
     username: userData.username!,
@@ -87,9 +93,8 @@ export const createUser = (userData: UserDto): User => {
  * @throws ValidationError if updateData is invalid
  */
 export const updateUser = (existingUser: User, updateData: UserDto): User => {
-  // Validate types
   validateUserData(updateData);
-  
+
   // Update only fields that are provided
   return {
     ...existingUser,

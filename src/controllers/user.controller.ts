@@ -1,7 +1,11 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import { URL } from "node:url";
 import { parseRequestBody, parseUrlParams } from "../utils/request.utils";
-import { sendJsonResponse, sendNoContentResponse, handleError } from "../utils/response.utils";
+import {
+  sendJsonResponse,
+  sendNoContentResponse,
+  handleError,
+} from "../utils/response.utils";
 import { userService } from "../domain/user/user.service";
 import { UserDto } from "../domain/user/user";
 import { USER_PATH, USER_ID } from "../router";
@@ -15,7 +19,7 @@ import { USER_PATH, USER_ID } from "../router";
 export const getAllUsers = async (
   _req: IncomingMessage,
   res: ServerResponse,
-  _url: URL
+  _url: URL,
 ): Promise<void> => {
   try {
     const users = await userService.getAllUsers();
@@ -34,12 +38,12 @@ export const getAllUsers = async (
 export const getUserById = async (
   _req: IncomingMessage,
   res: ServerResponse,
-  url: URL
+  url: URL,
 ): Promise<void> => {
   try {
     const params = parseUrlParams(url.pathname, `${USER_PATH}/${USER_ID}`);
     const userId = params.id;
-    
+
     const user = await userService.getUserById(userId);
     sendJsonResponse(res, 200, user);
   } catch (error) {
@@ -56,7 +60,7 @@ export const getUserById = async (
 export const createUser = async (
   req: IncomingMessage,
   res: ServerResponse,
-  _url: URL
+  _url: URL,
 ): Promise<void> => {
   try {
     const userData = await parseRequestBody<UserDto>(req);
@@ -76,13 +80,13 @@ export const createUser = async (
 export const updateUser = async (
   req: IncomingMessage,
   res: ServerResponse,
-  url: URL
+  url: URL,
 ): Promise<void> => {
   try {
     const params = parseUrlParams(url.pathname, `${USER_PATH}/${USER_ID}`);
     const userId = params.id;
     const userData = await parseRequestBody<UserDto>(req);
-    
+
     const updatedUser = await userService.updateUser(userId, userData);
     sendJsonResponse(res, 200, updatedUser);
   } catch (error) {
@@ -99,12 +103,12 @@ export const updateUser = async (
 export const deleteUser = async (
   req: IncomingMessage,
   res: ServerResponse,
-  url: URL
+  url: URL,
 ): Promise<void> => {
   try {
     const params = parseUrlParams(url.pathname, `${USER_PATH}/${USER_ID}`);
     const userId = params.id;
-    
+
     await userService.deleteUser(userId);
     sendNoContentResponse(res);
   } catch (error) {

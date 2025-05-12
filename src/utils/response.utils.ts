@@ -10,7 +10,7 @@ import { CustomError } from "../errors";
 export const sendJsonResponse = (
   res: ServerResponse,
   statusCode: number,
-  data: any
+  data: any,
 ): void => {
   res.writeHead(statusCode, { "Content-Type": "application/json" });
   res.end(JSON.stringify(data));

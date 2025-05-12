@@ -1,16 +1,16 @@
 import { config } from "dotenv";
 import { startServer } from "./server";
 import { registerRoute, USER_PATH, USER_ID } from "./router";
-import { 
-  healthCheck, 
-  getAllUsers, 
-  getUserById, 
-  createUser, 
-  updateUser, 
-  deleteUser 
+import {
+  healthCheck,
+  getAllUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
 } from "./controllers";
 
-const DEFAULT_PORT = 4000;
+export const DEFAULT_PORT = 4000;
 
 config();
 
@@ -46,4 +46,6 @@ const start = async () => {
   }
 };
 
-start();
+if (require.main === module) {
+  start();
+}
