@@ -10,7 +10,6 @@ type RequestHandler = (
   url: URL,
 ) => Promise<void>;
 
-// Route registry to store routes
 type Routes = {
   [method: string]: {
     [path: string]: RequestHandler;
@@ -53,18 +52,14 @@ export const router = async (
   res: ServerResponse,
 ): Promise<void> => {
   try {
-    // Ensure request method and url are present
     const method = req.method || "GET";
     const reqUrl = req.url || "/";
 
-    // Parse URL (use a base URL since req.url might be just a path)
     const baseUrl = `http://${req.headers.host || "localhost"}`;
     const url = new URL(reqUrl, baseUrl);
 
-    // Get the path pattern (remove query parameters)
     const pathPattern = getPathPattern(url.pathname);
 
-    // Find the route handler
     const routeHandlers = routes[method];
     const handler = routeHandlers && routeHandlers[pathPattern];
 
@@ -72,7 +67,6 @@ export const router = async (
       return await handler(req, res, url);
     }
 
-    // No route found
     throw new NotFoundError(`Not found: ${method} ${url.pathname}`);
   } catch (error) {
     handleError(res, error instanceof Error ? error : new Error(String(error)));

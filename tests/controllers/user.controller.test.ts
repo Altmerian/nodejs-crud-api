@@ -15,7 +15,8 @@ const updateData = {
   hobbies: ["reading", "cycling", "swimming"]
 };
 
-// Helper function for making HTTP requests
+// Helper function for making HTTP requests 
+// (we should use Supertest library for this, to not rely on custom implementation which is not tested)
 function request(method: string, path: string, data: any = null): Promise<{ statusCode: number, body: any }> {
   return new Promise((resolve, reject) => {
     const options = {
